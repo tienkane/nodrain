@@ -66,6 +66,9 @@ homebrew_casks:
       owner: tienkane
       name: homebrew-tap
       branch: main
+      # Cross-repo push needs a token with write access to the tap repo;
+      # GITHUB_TOKEN is scoped to this repo only.
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     directory: Casks
     hooks:
       post:

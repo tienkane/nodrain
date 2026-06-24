@@ -29,5 +29,6 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Pushing the cask to a separate tap repo needs a PAT with repo scope:
-          # HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
+          # Cross-repo Homebrew cask push needs a token with write access to
+          # tienkane/homebrew-tap (GITHUB_TOKEN is scoped to this repo only).
+          HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
