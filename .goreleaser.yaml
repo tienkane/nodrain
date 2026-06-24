@@ -1,0 +1,80 @@
+# GoReleaser v2 — https://goreleaser.com
+version: 2
+
+project_name: nodrain
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: nodrain
+    main: .
+    binary: nodrain
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X github.com/tienkane/nodrain/internal/cli.version={{.Version}}
+      - -X github.com/tienkane/nodrain/internal/cli.commit={{.Commit}}
+      - -X github.com/tienkane/nodrain/internal/cli.date={{.Date}}
+
+archives:
+  - id: nodrain
+    formats: ["tar.gz"]
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
+    format_overrides:
+      - goos: windows
+        formats: ["zip"]
+    files:
+      - README.md
+      - LICENSE
+
+checksum:
+  name_template: "checksums.txt"
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+      - "^ci:"
+
+# Homebrew via cask (brews/homebrew_formulas were deprecated in GoReleaser v2.10).
+# CLI binaries are unsigned, so strip the macOS quarantine attribute on install.
+homebrew_casks:
+  - name: nodrain
+    binaries:
+      - nodrain
+    homepage: "https://github.com/tienkane/nodrain"
+    description: "Terminal ERC-20 token-approval scanner"
+    license: "MIT"
+    repository:
+      owner: tienkane
+      name: homebrew-tap
+      branch: main
+    directory: Casks
+    hooks:
+      post:
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/nodrain"]
+          end
+
+release:
+  github:
+    owner: tienkane
+    name: nodrain
