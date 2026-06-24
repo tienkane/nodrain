@@ -43,13 +43,17 @@ code in the binary.
 ## Install
 
 ```sh
-# Homebrew
-brew install tienkane/tap/nodrain
+# Homebrew. The cask strips the macOS quarantine flag, so Homebrew asks you to
+# trust the tap once.
+brew tap tienkane/tap
+brew trust tienkane/tap
+brew install --cask nodrain
 
 # Go
 go install github.com/tienkane/nodrain@latest
 
-# Or download a prebuilt binary from the Releases page.
+# Or download a prebuilt binary from the Releases page:
+# https://github.com/tienkane/nodrain/releases
 ```
 
 ## Quick start
