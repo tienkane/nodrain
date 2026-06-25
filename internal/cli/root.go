@@ -42,4 +42,8 @@ func init() {
 	rootCmd.AddCommand(scanCmd)
 	rootCmd.AddCommand(exportCmd)
 	rootCmd.AddCommand(versionCmd)
+
+	// Enable the --version flag (alongside the `version` subcommand).
+	rootCmd.Version = version
+	rootCmd.SetVersionTemplate("{{.Name}} {{.Version}} (commit " + commit + ", built " + date + ")\n")
 }
