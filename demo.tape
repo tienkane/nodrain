@@ -1,50 +1,40 @@
 # VHS tape — render with: vhs demo.tape  (produces demo.gif)
-# Supply ETHERSCAN_API_KEY in the environment that runs vhs; never type it here.
+# Needs ETHERSCAN_API_KEY in the environment that runs vhs (never typed here).
 
 Output demo.gif
 
 Set Shell "bash"
-Set FontSize 17
+Set FontSize 16
 Set Width 1200
-Set Height 720
+Set Height 680
 Set Theme "Catppuccin Mocha"
-Set TypingSpeed 55ms
-Set Padding 22
+Set TypingSpeed 25ms
+Set Padding 20
 
-# Help
-Type "nodrain --help"
-Sleep 600ms
-Enter
-Sleep 2s
-
-# Interactive scan of a well-known wallet (vitalik.eth)
-Type "nodrain scan 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-Sleep 600ms
+# Scan a wallet for active token approvals (vitalik.eth on Arbitrum)
+Type "nodrain scan --chain arbitrum 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+Sleep 500ms
 Enter
 Sleep 5s
 
-# Navigate and select a couple of approvals
+# Navigate the table and tick approvals to revoke
 Down
-Sleep 400ms
-Space
-Sleep 400ms
-Down
-Sleep 400ms
+Sleep 700ms
 Space
 Sleep 600ms
+Up
+Sleep 500ms
+Space
+Sleep 800ms
 
-# Review the revoke plan
+# Review the revoke plan (revoke.cash link + unsigned calldata)
 Enter
-Sleep 3s
+Sleep 2500ms
 
-# Back out and quit
-Escape
-Sleep 600ms
+# Write the unsigned revoke bundle to a file
+Type "w"
+Sleep 1800ms
+
+# Quit
 Type "q"
-Sleep 1s
-
-# Scriptable JSON output
-Type "nodrain scan --json 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 | jq '.[0]'"
-Sleep 600ms
-Enter
-Sleep 3s
+Sleep 800ms
